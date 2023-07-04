@@ -1,0 +1,15 @@
+{
+    "date": "2023-06-30",
+    "prices": {
+        "gasolina_premium": 291.60,
+        "gasolina_regular": 273.50,
+        "diesel_premium": 237.10,
+        "diesel_regular": 220.60,
+        "avtur": 176.26,
+        "keroseno": 263.10,
+        "fuel_oil_#6": 153.61,
+        "fuel_oil_1%": 173.27,
+        "glp": 132.60,
+        "gas_natural": 43.97
+    }
+}
