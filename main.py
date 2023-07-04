@@ -55,7 +55,7 @@ formatted_keys = {
 
 # Commands
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text('Hola, gracias por chatear conmigo. Soy un bot que te da los precios actualizados '
+    await update.message.reply_text('Hola, soy un bot que te da los precios actualizados '
                                     'de los combustibles en RD.  Haz click en MENU '
                                     'para ver las opciones. Desarrollado por @Pyre_3.')
 
@@ -133,7 +133,7 @@ if __name__ == '__main__':
 
     # Polls the bot (listen for messages)
     print('Polling...')
-    app.run_polling(poll_interval=3)
+    app.run_polling(poll_interval=5)
     
     # Dotenv file for API keys and other sensitive info (not included in repo) 
     print(TELEGRAM_API_KEY)
