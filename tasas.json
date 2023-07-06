@@ -1,14 +1,35 @@
 {
-  "date": "2023-07-04",
-  "source": "https://www.banreservas.com/",
-  "currencies": {
-    "dollar": {
-      "compra": 54.65,
-      "venta": 56.00
+    "2023-07-06": {
+        "currencies": {
+            "USD": {
+                "compra": 54.05,
+                "venta": 56.05
+            },
+            "CAD": {
+                "compra": 38.25,
+                "venta": 42.75
+            },
+            "EUR": {
+                "compra": 59.3,
+                "venta": 62.3
+            }
+        }
     },
-    "euro": {
-      "compra": 59.0,
-      "venta": 63.0
-    }
-  }
+    "2023-07-05": {
+        "currencies": {
+            "USD": {
+                "compra": 54.65,
+                "venta": 56.0
+            },
+            "CAD": {
+                "compra": 38.2,
+                "venta": 42.7
+            },
+            "EUR": {
+                "compra": 59.0,
+                "venta": 63.0
+            }
+        }
+    },
+    "source": "https://do.scotiabank.com/"
 }

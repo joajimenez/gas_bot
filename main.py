@@ -2,6 +2,8 @@ from datetime import datetime
 import json
 import locale
 from typing import Final
+import sched
+import time
 
 from dotenv import dotenv_values
 from telegram import Update
@@ -14,6 +16,7 @@ from telegram.ext import (
 )
 
 import calculadora
+import currency_scrapper_n_updater
 
 # Load API key from .env file
 
@@ -30,15 +33,12 @@ with open('fuel_prices.json', 'r') as read_file:
 
 prices = data['prices']
 
-
 # Set locale to "es-DO"
 locale.setlocale(locale.LC_TIME, 'es_DO.utf8')
 
 last_update_date = data['date']
 date_object = datetime.strptime(last_update_date, "%Y-%m-%d")
 formatted_date = date_object.strftime("%d de %B, %Y").capitalize()
-
-# print(last_update_date)
 
 formatted_keys = {
     'gasolina_premium': 'Gasolina Premium',
@@ -53,6 +53,7 @@ formatted_keys = {
     'gas_natural': 'Gas Natural'
 }
 
+
 # Commands
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text('Hola, soy un bot que te da los precios actualizados '
@@ -61,18 +62,17 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text('Aun estoy en desarrollo. Por el momento solo puedo dar los precios de los combustibles cuando haces click en el botón de /PRECIOS.')
+    await update.message.reply_text('Aun estoy en desarrollo. Por el momento solo puedo dar los precios de los '
+                                    'combustibles cuando haces click en el botón de /PRECIOS.')
+
 
 async def fuel_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     formatted_prices = '\n'.join([f"* {formatted_keys[key]}: ${value:.2f}" for key, value in prices.items()])
     response = f'Precios al {formatted_date}:\n\n{formatted_prices}'
     await update.message.reply_text(response)
-    
 
-# DONE: Fix percentage change display
-    
+
 async def currency_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-  
     response = f'Tasas del dia:\n\n**DOLAR:\nCompra: ${calculadora.dollar_compra_hoy:.2f}\nVenta: ${calculadora.dollar_venta_hoy:.2f}\nCambio porcentual vs ayer: {calculadora.cambio_porcentual_compra_dollar:.2f}%\n\n**EURO:\nCompra: ${calculadora.euro_compra_hoy:.2f}\nVenta: ${calculadora.euro_venta_hoy:.2f}\nCambio porcentual vs ayer: {calculadora.cambio_porcentual_compra_euro:.2f}%\n\nFuente: {calculadora.source}'
     await update.message.reply_text(response)
 
@@ -87,9 +87,9 @@ def handle_response(text: str):
     if 'como estas' in processed_text:
         return "Tamo bien!"
 
-    if 'amo la republica dominicana' in processed_text or 'amo errede' in processed_text or 'amo rd' in processed_text or 'errede' in processed_text:
+    if 'republica dominicana' in processed_text or 'amo' in processed_text or 'rd' in processed_text or 'errede' in processed_text:
         return 'Amo la Republica Dominicana!'
-    
+
     if 'gracias' in processed_text:
         return 'De nada!'
 
@@ -118,9 +118,33 @@ async def error(update: Update, context: ContextTypes.DEFAULT_TYPE):
     print(f'Update {update} caused error {context.error}')
 
 
+counter = [0]
+
+
+async def callback_minute(context: ContextTypes.DEFAULT_TYPE):
+    counter[0] += 1
+    await context.bot.send_message(chat_id=-1001915270790,
+                                   text=f'Hola, desde Job Queue. Este mensaje se envia cada minuto. Este es un contador {counter[0]}')
+
+# Run the currency_scrapper_n_updater function every 24 hours at 10am
+
+scheduler = sched.scheduler(time.time, time.sleep)
+scheduler.enter(86400, 1, currency_scrapper_n_updater.scrape_currency_rates)
+
+while True:
+    scheduler.run()
+    time.sleep(60)
+
+
+
 if __name__ == '__main__':
+
     print('Starting bot...')
     app = Application.builder().token(TOKEN).build()
+    # Job queue for scheduled tasks
+    job_queue = app.job_queue
+    job_minute = job_queue.run_repeating(callback_minute, interval=5, first=10)
+    print(type(job_queue), job_queue)
 
     # Commands
     app.add_handler(CommandHandler('inicio', start_command))
@@ -135,8 +159,8 @@ if __name__ == '__main__':
     app.add_error_handler(error)
 
     # Polls the bot (listen for messages)
-    print('Polling...')
+    print('Listening...')
     app.run_polling(poll_interval=5)
-    
+
     # Dotenv file for API keys and other sensitive info (not included in repo) 
     print(TELEGRAM_API_KEY)
