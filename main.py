@@ -73,7 +73,7 @@ async def fuel_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def currency_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    response = f'Tasas del dia:\n\n**DOLAR:\nCompra: ${calculadora.dollar_compra_hoy:.2f}\nVenta: ${calculadora.dollar_venta_hoy:.2f}\nCambio porcentual vs ayer: {calculadora.cambio_porcentual_compra_dollar:.2f}%\n\n**EURO:\nCompra: ${calculadora.euro_compra_hoy:.2f}\nVenta: ${calculadora.euro_venta_hoy:.2f}\nCambio porcentual vs ayer: {calculadora.cambio_porcentual_compra_euro:.2f}%\n\nFuente: {calculadora.source}'
+    response = f'Tasas del dia:\n\n**DOLLAR:\nCompra: ${calculadora.euro_today_buy:.2f}\nVenta: ${calculadora.dollar_today_sell:.2f}\nCambio porcentual vs ayer: {calculadora.cambio_porcentual_compra_dollar:.2f}%\n\n**EURO:\nCompra: ${calculadora.euro_today_buy:.2f}\nVenta: ${calculadora.euro_today_sell:.2f}\nCambio porcentual vs ayer: {calculadora.cambio_porcentual_compra_euro:.2f}%\n\nFuente: {calculadora.source}'
     await update.message.reply_text(response)
 
 
@@ -120,9 +120,9 @@ async def error(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def callback_minute(context: ContextTypes.DEFAULT_TYPE):
-    counter[0] += 1
+   
     await context.bot.send_message(chat_id=-1001915270790,
-                                   text=f'Hola, desde Job Queue. Este mensaje se envia cada minuto. Este es un contador {counter[0]}')
+                                   text=f'Hola, desde Job Queue. Este mensaje se envía cada minuto.')
 
 # Run the currency_scrapper_n_updater function every 24 hours at 10am
 
