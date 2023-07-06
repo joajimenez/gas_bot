@@ -126,17 +126,10 @@ async def callback_minute(context: ContextTypes.DEFAULT_TYPE):
 
 # Run the currency_scrapper_n_updater function every 24 hours at 10am
 
-scheduler = sched.scheduler(time.time, time.sleep)
-scheduler.enter(86400, 1, currency_scrapper_n_updater.scrape_currency_rates)
-
-while True:
-    scheduler.run()
-    time.sleep(60)
-
 
 
 if __name__ == '__main__':
-
+    
     print('Starting bot...')
     app = Application.builder().token(TOKEN).build()
 
@@ -158,3 +151,10 @@ if __name__ == '__main__':
 
     # Dotenv file for API keys and other sensitive info (not included in repo) 
     print(TELEGRAM_API_KEY)
+    
+    scheduler = sched.scheduler(time.time, time.sleep)
+    scheduler.enter(86400, 1, currency_scrapper_n_updater.scrape_currency_rates)
+
+    while True:
+        scheduler.run()
+        time.sleep(60)
