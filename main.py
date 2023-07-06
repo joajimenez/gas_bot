@@ -89,6 +89,9 @@ def handle_response(text: str):
 
     if 'amo la republica dominicana' in processed_text or 'amo errede' in processed_text or 'amo rd' in processed_text or 'errede' in processed_text:
         return 'Amo la Republica Dominicana!'
+    
+    if 'gracias' in processed_text:
+        return 'De nada!'
 
     return 'No entiendo lo que escribiste...'
 
