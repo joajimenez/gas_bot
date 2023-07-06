@@ -3,8 +3,8 @@
   "source": "https://www.banreservas.com/",
   "currencies": {
     "dollar": {
-      "compra": 54.45,
-      "venta": 55.95
+      "compra": 54.65,
+      "venta": 56.00
     },
     "euro": {
       "compra": 59.0,
