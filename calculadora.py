@@ -1,4 +1,5 @@
 import json
+import datetime
 
 def calculate_percentage_change(today, yesterday):
     return ((today - yesterday) / yesterday) * 100
@@ -17,24 +18,28 @@ with open('tasas.json', 'r') as read_file:
 source = data['source']
 
 # Dollar rates
-dollar_compra_hoy = data['currencies']['dollar']['compra']
-dollar_venta_hoy = data['currencies']['dollar']['venta']
 
-dollar_compra_ayer = 55.25
-dollar_venta_ayer = 55.57
+today = datetime.date.today().isoformat()
+yesterday = (datetime.date.today() - datetime.timedelta(days=1)).isoformat()
+
+dollar_today_buy = data[today]['currencies']['USD']['compra']
+dollar_today_sell = data[today]['currencies']['USD']['venta']
+
+dollar_yesterday_buy = data[today]['currencies']['USD']['compra']
+dollar_yesterday_sell = data[today]['currencies']['USD']['venta']
 
 # Euro rates
-euro_compra_hoy = data['currencies']['euro']['compra']
-euro_venta_hoy = data['currencies']['euro']['venta']
+euro_today_buy = data[today]['currencies']['EUR']['compra']
+euro_today_sell = data[today]['currencies']['EUR']['venta']
 
-euro_compra_ayer = 59.25
-euro_venta_ayer = 62.57
+euro_yesterday_buy = data[yesterday]['currencies']['EUR']['compra']
+euro_yesterday_sell = data[yesterday]['currencies']['EUR']['venta']
 
-cambio_porcentual_venta_dollar = calculate_percentage_change(dollar_venta_hoy, dollar_venta_ayer)
-cambio_porcentual_compra_dollar = calculate_percentage_change(dollar_compra_hoy, dollar_compra_ayer)
+cambio_porcentual_venta_dollar = calculate_percentage_change(dollar_today_sell, dollar_yesterday_sell)
+cambio_porcentual_compra_dollar = calculate_percentage_change(dollar_today_buy, dollar_yesterday_buy)
 
-cambio_porcentual_venta_euro = calculate_percentage_change(euro_venta_hoy, euro_venta_ayer)
-cambio_porcentual_compra_euro = calculate_percentage_change(euro_compra_hoy, euro_compra_ayer)
+cambio_porcentual_venta_euro = calculate_percentage_change(euro_today_sell, euro_yesterday_sell)
+cambio_porcentual_compra_euro = calculate_percentage_change(euro_today_buy, euro_yesterday_buy)
 
 print_percentage_change(cambio_porcentual_venta_dollar)
 print_percentage_change(cambio_porcentual_compra_dollar)

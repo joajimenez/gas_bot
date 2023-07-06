@@ -118,8 +118,6 @@ async def error(update: Update, context: ContextTypes.DEFAULT_TYPE):
     print(f'Update {update} caused error {context.error}')
 
 
-counter = [0]
-
 
 async def callback_minute(context: ContextTypes.DEFAULT_TYPE):
     counter[0] += 1
@@ -141,10 +139,6 @@ if __name__ == '__main__':
 
     print('Starting bot...')
     app = Application.builder().token(TOKEN).build()
-    # Job queue for scheduled tasks
-    job_queue = app.job_queue
-    job_minute = job_queue.run_repeating(callback_minute, interval=5, first=10)
-    print(type(job_queue), job_queue)
 
     # Commands
     app.add_handler(CommandHandler('inicio', start_command))
