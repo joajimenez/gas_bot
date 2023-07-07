@@ -1,5 +1,9 @@
 import json
 import datetime
+import currency_scrapper_n_updater
+
+
+currency_scrapper_n_updater.scrape_currency_rates()
 
 def calculate_percentage_change(today, yesterday):
     return ((today - yesterday) / yesterday) * 100

@@ -31,5 +31,21 @@
             }
         }
     },
-    "source": "https://do.scotiabank.com/"
+    "source": "https://do.scotiabank.com/",
+    "2023-07-07": {
+        "currencies": {
+            "USD": {
+                "compra": 54.05,
+                "venta": 56.05
+            },
+            "CAD": {
+                "compra": 38.25,
+                "venta": 42.75
+            },
+            "EUR": {
+                "compra": 59.3,
+                "venta": 62.3
+            }
+        }
+    }
 }

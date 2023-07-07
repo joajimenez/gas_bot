@@ -26,6 +26,8 @@ TELEGRAM_API_KEY = env_variables['TELEGRAM_API_TOKEN']
 TOKEN: Final = TELEGRAM_API_KEY
 BOT_USERNAME: Final = '@gas_rd_bot'
 
+currency_scrapper_n_updater.scrape_currency_rates()
+
 # Import, format and display FUEL prices from json file.
 
 with open('fuel_prices.json', 'r') as read_file:
