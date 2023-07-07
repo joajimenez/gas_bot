@@ -35,16 +35,16 @@
     "2023-07-07": {
         "currencies": {
             "USD": {
-                "compra": 54.05,
-                "venta": 56.05
+                "compra": 54.1,
+                "venta": 56.1
             },
             "CAD": {
                 "compra": 38.25,
                 "venta": 42.75
             },
             "EUR": {
-                "compra": 59.3,
-                "venta": 62.3
+                "compra": 59.5,
+                "venta": 62.5
             }
         }
     }
